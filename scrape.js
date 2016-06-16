@@ -5,8 +5,31 @@ var cheerio = require('cheerio');
 var app     = express();
 var sendgrid = require('sendgrid').SendGrid(process.env.SENDGRID_API_KEY);
 var url = require('url');
-var redis = require("redis");
+var redis = require('redis');
 var client = redis.createClient();
+var schedule = require('node-schedule');
+
+var runScheduler = function() {
+  // Once per minute:
+  rule =   '* * * * *'
+  //      ┬ ┬ ┬ ┬ ┬ ┬
+  //      │ │ │ │ │ |
+  //      │ │ │ │ │ └ day of week (0 - 7) (0 or 7 is Sun)
+  //      │ │ │ │ └── month (1 - 12)
+  //      │ │ │ └──── day of month (1 - 31)
+  //      │ │ └────── hour (0 - 23)
+  //      │ └──────── minute (0 - 59)
+  //      └────────── second (0 - 59, OPTIONAL)
+
+  // Kick off the job
+  var job = schedule.scheduleJob(rule, function() {
+    getDeals(function(){
+      console.log("Scheduled process completed");
+    });
+  });
+
+  console.log("Scheduler running...");
+};
 
 var getDeals = function(callback) {
   var requestUrl = 'http://www.dealzon.com/home-theater/hdtvs?screen-size=60',
@@ -50,8 +73,6 @@ var getDeals = function(callback) {
             console.log("Sent email", response.statusCode, content);
           })
         }
-
-        console.log(json);
 
         callback(html);
       }
@@ -98,5 +119,7 @@ app.get('/scrape', function(req, res){
 
 var port = process.env.PORT || 3000;
 app.listen(port)
-console.log("Visit http://localhost:" + port);
+console.log("HTTP app running on port: " + port + ". Visit /scrape to manually run scraper process.");
 exports = module.exports = app;
+
+runScheduler();

@@ -14,7 +14,8 @@
     "request"    : "latest",
     "cheerio"    : "latest",
     "sendgrid"   : "latest",
-    "redis"      : "latest"
+    "redis"      : "latest",
+    "node-schedule": "latest"
   }
 }
 
