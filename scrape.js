@@ -40,19 +40,20 @@ var getDeals = function(callback) {
             from_email = new helper.Email(process.env.EMAIL_FROM),
             to_email = new helper.Email(process.env.EMAIL_TO),
             subject = "New Steve & Kevin TV Deal Alert",
-            content = news helper.Content("text/plain", json.map(function() { return "Size: " + this.size + ", Price: " + this.price + ", Link: " + this.link; }).join('\n\n')),
+            content = new helper.Content("text/plain", json.map(function() { return "Size: " + this.size + ", Price: " + this.price + ", Link: " + this.link; }).join('\n\n')),
             mail = new helper.Mail(from_email, subject, to_email, content),
             requestBody = mail.toJSON(),
-            request = sg.emptyRequest();
+            request = sendgrid.emptyRequest();
 
-        request.method = 'POST'
-        request.path = '/v3/mail/send'
-        request.body = requestBody
+        request.method = 'POST';
+        request.path = '/v3/mail/send';
+        request.body = requestBody;
 
-        sg.API(request, function (response) {
-          console.log(response.statusCode)
-          console.log(response.body)
-          console.log(response.headers)
+        sendgrid.API(request, function (response) {
+          console.log("Sent email");
+          console.log(response.statusCode);
+          console.log(response.body);
+          console.log(response.headers);
         })
       }
 
