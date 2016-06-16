@@ -13,7 +13,8 @@
     "express"    : "latest",
     "request"    : "latest",
     "cheerio"    : "latest",
-    "sendgrid"   : "latest"
+    "sendgrid"   : "latest",
+    "redis"      : "latest"
   }
 }
 

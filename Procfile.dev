@@ -1,0 +1,2 @@
+web: node scrape.js
+redis: redis-server /usr/local/etc/redis.conf
