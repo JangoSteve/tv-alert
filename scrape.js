@@ -95,7 +95,14 @@ var getDeals = function(callback) {
             // data is null if the key doesn't exist
             if (err || data === null) {
               console.log("New deal for " + link)
+              // Add link as key in redis to keep track and not send multiple alerts for same deal
               client.set(link, title, redis.print);
+
+              // Only need link key in redis for as long as deal appears on first page of recent deals,
+              // which seems to be maybe around a month at the most, so let's expire once every two months
+              client.expireat(key, parseInt((+new Date)/1000) + (60 * 60 * 24 * 30 * 2));
+
+              // Add deal to our array for including in email notification
               json.push({"size": size, "regularPrice": regularPrice, "price": price, "location": location, "expired": expired, "link": link, "title": title});
             } else {
               console.log("Deal for " + link + " was already emailed")
