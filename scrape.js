@@ -6,7 +6,7 @@ var app     = express();
 var sendgrid = require('sendgrid').SendGrid(process.env.SENDGRID_API_KEY);
 var url = require('url');
 var redis = require('redis');
-var client = redis.createClient();
+var client = redis.createClient(process.env.REDIS_URL);
 var schedule = require('node-schedule');
 
 var runScheduler = function() {
