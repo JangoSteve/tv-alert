@@ -1,0 +1,19 @@
+{
+  "name": "tv-alert",
+  "version": "0.0.1",
+  "engines": {
+    "node": "0.10.x",
+    "npm": "3.4.x"
+  },
+  "private": true,
+  "scripts": {
+    "start": "node scrape"
+  },
+  "dependencies": {
+    "express"    : "latest",
+    "request"    : "latest",
+    "cheerio"    : "latest",
+    "sendgrid"   : "latest"
+  }
+}
+
