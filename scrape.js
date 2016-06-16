@@ -10,15 +10,15 @@ var client = redis.createClient(process.env.REDIS_URL);
 var schedule = require('node-schedule');
 
 var runScheduler = function() {
-  // Once per minute:
-  rule =   '* * * * *'
-  //      ┬ ┬ ┬ ┬ ┬ ┬
-  //      │ │ │ │ │ |
-  //      │ │ │ │ │ └ day of week (0 - 7) (0 or 7 is Sun)
-  //      │ │ │ │ └── month (1 - 12)
-  //      │ │ │ └──── day of month (1 - 31)
-  //      │ │ └────── hour (0 - 23)
-  //      │ └──────── minute (0 - 59)
+  // Once every 3 minutes:
+  rule = '/3 * * * * *'
+  //      ┬  ┬ ┬ ┬ ┬ ┬
+  //      │  │ │ │ │ |
+  //      │  │ │ │ │ └ day of week (0 - 7) (0 or 7 is Sun)
+  //      │  │ │ │ └── month (1 - 12)
+  //      │  │ │ └──── day of month (1 - 31)
+  //      │  │ └────── hour (0 - 23)
+  //      │  └──────── minute (0 - 59)
   //      └────────── second (0 - 59, OPTIONAL)
 
   // Kick off the job
